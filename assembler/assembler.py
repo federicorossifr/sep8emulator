@@ -5,8 +5,8 @@ import os
 from binascii import unhexlify
 
 if len(sys.argv) < 3:
-	print "Usage: ./assembler.py align_sector source.as";
-	print "Usage: ./assembler.py align_sector source.as reloc_addr";	
+	print("Usage: ./assembler.py align_sector source.as");
+	print("Usage: ./assembler.py align_sector source.as reloc_addr");	
 	sys.exit();
 global SECTOR_SIZE
 SECTOR_SIZE=512
@@ -17,7 +17,7 @@ start_address = None;
 if len(sys.argv) == 4:
 	relocator = True;
 	start_address = int(sys.argv[3],16);
-	print "Assembling module relocating address to: " + sys.argv[3]
+	print("Assembling module relocating address to: " + sys.argv[3])
 
 
 instr_trad = {
@@ -131,7 +131,7 @@ def splitBytes(strl): #WE ASSUME LITERLAS ARE ALWAYS GIVEN IN HEX
 	strl = strl[2:]
 	while(len(strl)%2):
 		strl="0"+strl; #NORMALIZE LENGTH
-	for i in xrange(len(strl),0,-2):
+	for i in range(len(strl),0,-2):
 		output.append("0x"+strl[i-2:i]);
 	return output;
 
@@ -149,7 +149,7 @@ def assembly(lines):
 			tmp = line[1:];
 			tmp = tmp.split(",");
 			newlines = [];
-			print tmp[0];
+			print(tmp[0]);
 			with open(os.path.dirname(os.path.realpath(__file__))+"/"+tmp[0]) as fd_n:
 				newlines = fd_n.readlines(); 
 			bin_instr = [];
@@ -197,7 +197,7 @@ def assembly(lines):
 				__tmp+=start_address
 				tmp=hex(__tmp);
 				encodedSrc = splitBytes(tmp);
-				print "Relocated " + src + " to " + tmp
+				print("Relocated " + src + " to " + tmp)
 			else:
 				tmp = hex(int(src,16));
 				encodedSrc = splitBytes(src);
@@ -215,7 +215,7 @@ def assembly(lines):
 				__dsttmp+=start_address;
 				dsttmp=hex(__dsttmp);
 				encodedDst = splitBytes(dsttmp);
-				print "Relocated " + dst +" to " + dsttmp
+				print("Relocated " + dst +" to " + dsttmp)
 			else:
 				tmp = hex(int(dst,16));
 				encodedDst = splitBytes(dst);
