@@ -1,0 +1,24 @@
+#!/bin/bash
+cmd="./sep8 assembler/arch/bios.bin mydisk.vmdk"
+
+while [[ $# -gt 0 ]];do
+	key="$1"
+	case $key in
+	    -g)
+	    cmd="valgrind --leak-check=full --track-origins=yes $cmd"
+	    shift
+	    ;;
+	    -l)
+	    cmd="$cmd log.txt"
+	    shift
+	    ;;
+	    --default)
+	    shift # past argument
+	    ;;
+	    *)    # unknown option
+	    shift # past argument
+    	    ;;
+	esac
+done
+$cmd
+echo "Executed: $cmd"
